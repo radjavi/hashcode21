@@ -1,17 +1,43 @@
-import solve, score
 import argparse
+from os import walk
 
-def hashcode(in_file, out_file):
-  with open(in_file, "r") as inp, open(out_file, "w") as out:
+import score
+import solve
+
+
+# Hardcoded output file names
+output_files = [
+  'out/a_out',
+  'out/b_out',
+  'out/c_out',
+  'out/d_out',
+  'out/e_out',
+]
+
+
+def build_paths():
+  """ Reads files from './in' directory and maps to appropriate output
+  file name.
+  """
+  _, _, input_files = next(walk('./in'))
+  _input_files = (sorted(input_files))
+  input_files = ['in/' + input_file for input_file in _input_files]
+  return sorted(set(zip(input_files, output_files)), key=lambda t: t[1])
+
+
+def main(file):
+  """ The file handler. Reads all input files and passes the string to
+  the solver. Write the solvers output string to the appropriate file.
+  """
+  with open(file[0], 'r') as inp, open(file[1], 'w') as out:
     # Call appropriate solver
     out_str = solve.solve(inp)
     # Create output file
     out.write(out_str)
-    print(f'DONE: {out_file}, SCORE: {score.score(out_str)}')
+    print(f'DONE: {file[0]}, SCORE: {score.score(out_str)}')
+
 
 if __name__ == '__main__':
-  hashcode("in/a_example.in", "out/a_out")
-  hashcode("in/b_little_bit_of_everything.in", "out/b_out")
-  hashcode("in/c_many_ingredients.in", "out/c_out")
-  hashcode("in/d_many_pizzas.in", "out/d_out")
-  hashcode("in/e_many_teams.in", "out/e_out")
+  files = build_paths()
+  for file in files:
+    main(file)
