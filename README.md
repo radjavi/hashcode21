@@ -1,2 +1,6 @@
-# hashcode21
-Google Hash Code 2021
+# Google Hash Code 2021
+
+## Team: `Saving Private Static Ryan`
+
+## Online Qualification Round
+Score: TBA
