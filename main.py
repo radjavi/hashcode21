@@ -20,7 +20,7 @@ def build_paths():
   file name.
   """
   _, _, input_files = next(walk('./in'))
-  _input_files = (sorted(input_files))
+  _input_files = sorted(input_files)
   input_files = ['in/' + input_file for input_file in _input_files]
   return sorted(set(zip(input_files, output_files)), key=lambda t: t[1])
 
