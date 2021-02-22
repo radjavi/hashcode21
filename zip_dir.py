@@ -3,19 +3,23 @@ import zipfile
 
 
 # Not relevant to judges
-IGNORE = [
+IGNORE = set([
     '.git',
+    '__pycache__',
+    'in',
+    'out',
     '.gitignore',
     'LICENSE',
     'Makefile',
     'README.md',
     'hashcode21.zip',
     'zip_dir.py',
-]
+])
 
 
 def zip_directory(zf):
-    for root, _, files in os.walk('./'):
+    for root, dirs, files in os.walk('./'):
+        dirs[:] = [d for d in dirs if d not in IGNORE]
         for file in files:
             if file in IGNORE:
                 continue
