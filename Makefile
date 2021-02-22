@@ -1,5 +1,5 @@
-zip:
-	python zip_dir.py
-
 run:
 	python main.py
+
+zip:
+	python zip_dir.py
