@@ -130,3 +130,6 @@ dmypy.json
 
 #macOS
 .DS_Store
+
+# Zip file
+hashcode21.zip
