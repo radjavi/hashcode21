@@ -4,5 +4,3 @@ def solve(inp):
     return belmin_init(inp)
 
 
-def belmin_init(inp):
-    return ''
