@@ -30,6 +30,7 @@ def solve1(inp):
             "start": B,
             "end": E,
             "length": L,
+            'weight' : 0
         }
         if B not in intersections:
             intersections[B] = {
@@ -57,8 +58,18 @@ def solve1(inp):
         line = inp.readline().strip().split(' ')
         P = int(line[0])
         # car = []
-        for p in range(P):
-            street_count[line[p]] += 1 / P
+
+        for p in range(1,P):
+            #print([next_p for next_p in range(p,P)])
+            path_weight = np.sum([streets[line[next_p]]['length'] for next_p in range(p,P)])
+            
+            incoming_weight = 0
+            inc_inter = intersections[streets[line[p]]['start']]['incoming']
+            for inc in inc_inter:
+               incoming_weight += 1/streets[inc]['length']
+           
+            street_count[line[p]] += 1/P
+
         #    car.append(line[p])
         # cars.add(car)
         
@@ -77,14 +88,17 @@ def solve1(inp):
             weight = 0
             if v["sum_incoming_weights"] != 0:
                 weight = street_count[incoming] / v["sum_incoming_weights"]
-            streets[incoming]["weight"] = weight
+            streets[incoming]["weight"] += weight 
+            #for v_tmp in intersections[streets[incoming]["start"]]['incoming']:
+            #   streets[v_tmp]['weight'] += streets[incoming]['length']/D
     
     for intersection, v in intersections.items():
-        for incoming in v["incoming"]:
-            v["green_lights"].append({
-                "name": incoming,
-                "duration": np.max([int(streets[incoming]["weight"] * np.min([D, 10])), 1]),
-            })
+
+      for incoming in v["incoming"]:
+         v["green_lights"].append({
+            "name": incoming,
+            "duration": np.min([D, np.max([int(streets[incoming]["weight"] * np.min([D, 10])), 1])]),
+         })
 
     
     # for starting_street in starting_street_count.__reversed__():
