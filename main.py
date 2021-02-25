@@ -33,7 +33,7 @@ def main(file):
         out_str = solve.solve(inp)
         # Create output file
         out.write(out_str)
-        print(f'DONE: {file[0]}, SCORE: {score.score(out_str)}')
+        print(f'DONE: {file[0]}, SCORE: {score.score(inp, out_str)}')
 
 
 if __name__ == '__main__':
