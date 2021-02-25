@@ -49,7 +49,7 @@ def solve1(inp):
         else:
             intersections[E]["incoming"].append(street_name)
         s += 1
-    
+
     v = 0
     street_count = defaultdict(int)
     #cars = SortedList(key=lambda x: len(x))
@@ -62,17 +62,17 @@ def solve1(inp):
         for p in range(1,P):
             #print([next_p for next_p in range(p,P)])
             path_weight = np.sum([streets[line[next_p]]['length'] for next_p in range(p,P)])
-            
+
             incoming_weight = 0
             inc_inter = intersections[streets[line[p]]['start']]['incoming']
             for inc in inc_inter:
                incoming_weight += 1/streets[inc]['length']
-           
+
             street_count[line[p]] += 1/P
 
         #    car.append(line[p])
         # cars.add(car)
-        
+
         v += 1
 
     print(len(street_count))
@@ -88,10 +88,10 @@ def solve1(inp):
             weight = 0
             if v["sum_incoming_weights"] != 0:
                 weight = street_count[incoming] / v["sum_incoming_weights"]
-            streets[incoming]["weight"] += weight 
-            #for v_tmp in intersections[streets[incoming]["start"]]['incoming']:
+            streets[incoming]["weight"] += weight
+            # for v_tmp in intersections[streets[incoming]["start"]]['incoming']:
             #   streets[v_tmp]['weight'] += streets[incoming]['length']/D
-    
+
     for intersection, v in intersections.items():
 
       for incoming in v["incoming"]:
