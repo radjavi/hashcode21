@@ -1,4 +1,7 @@
-from sortedcollections import ValueSortedDict
+#from sortedcollections import ValueSortedDict
+#from sortedcontainers import SortedList
+from collections import defaultdict
+import numpy as np
 
 # Solver that takes an input as a file object,
 # and returns the output as a string
@@ -47,39 +50,58 @@ def solve1(inp):
         s += 1
     
     v = 0
-    starting_street_count = ValueSortedDict()
-    cars = []
+    street_count = defaultdict(int)
+    #cars = SortedList(key=lambda x: len(x))
     # Paths of each car
     while v < V:
         line = inp.readline().strip().split(' ')
         P = int(line[0])
-        car = []
+        # car = []
         for p in range(P):
-           car.append(line[p])
-        cars.append(car)
-        if line[1] not in starting_street_count:
-            starting_street_count[line[1]] = 1
-        else:
-            starting_street_count[line[1]] += 1
+            street_count[line[p]] += 1 / P
+        #    car.append(line[p])
+        # cars.add(car)
+        
         v += 1
 
-    print(starting_street_count)
+    print(len(street_count) * len(intersections))
+    #print(cars)
+    #print(starting_street_count)
+
+    for intersection, v in intersections.items():
+        sum_incoming_weights = sum([street_count[incoming] for incoming in v["incoming"]])
+        intersections[intersection]["sum_incoming_weights"] = sum_incoming_weights
+
+    for intersection, v in intersections.items():
+        for incoming in v["incoming"]:
+            weight = 0
+            if v["sum_incoming_weights"] != 0:
+                weight = street_count[incoming] / v["sum_incoming_weights"]
+            streets[incoming]["weight"] = weight
     
-    for starting_street in starting_street_count.__reversed__():
-        E = streets[starting_street]["end"]
-        duration = starting_street_count[starting_street]
-        if len(intersections[E]["green_lights"]) == 0:
-            intersections[E]["green_lights"].append({
-                "name": starting_street,
-                "duration": D,
+    for intersection, v in intersections.items():
+        for incoming in v["incoming"]:
+            v["green_lights"].append({
+                "name": incoming,
+                "duration": np.max([int(streets[incoming]["weight"] * np.min([D, 10])), 1]),
             })
 
-    for intersection in intersections:
-        if not intersections[intersection]["green_lights"]:
-            intersections[intersection]["green_lights"].append({
-                "name": intersections[intersection]["incoming"][0],
-                "duration": D,
-            })
+    
+    # for starting_street in starting_street_count.__reversed__():
+    #     E = streets[starting_street]["end"]
+    #     duration = starting_street_count[starting_street]
+    #     if len(intersections[E]["green_lights"]) == 0:
+    #         intersections[E]["green_lights"].append({
+    #             "name": starting_street,
+    #             "duration": D,
+    #         })
+
+    # for intersection in intersections:
+    #     if not intersections[intersection]["green_lights"]:
+    #         intersections[intersection]["green_lights"].append({
+    #             "name": intersections[intersection]["incoming"][0],
+    #             "duration": D,
+    #         })
 
     out_str = f'{len(intersections)}\n'
     for intersection in intersections:
