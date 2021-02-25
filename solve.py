@@ -57,14 +57,14 @@ def solve1(inp):
         line = inp.readline().strip().split(' ')
         P = int(line[0])
         # car = []
-        for p in range(P):
+        for p in range(1, P):
             street_count[line[p]] += 1 / P
         #    car.append(line[p])
         # cars.add(car)
         
         v += 1
 
-    print(len(street_count) * len(intersections))
+    print(len(street_count))
     #print(cars)
     #print(starting_street_count)
 
@@ -83,25 +83,8 @@ def solve1(inp):
         for incoming in v["incoming"]:
             v["green_lights"].append({
                 "name": incoming,
-                "duration": np.max([int(streets[incoming]["weight"] * np.min([D, 10])), 1]),
+                "duration": np.max([int(streets[incoming]["weight"] * np.min([D, 5])), 1]),
             })
-
-    
-    # for starting_street in starting_street_count.__reversed__():
-    #     E = streets[starting_street]["end"]
-    #     duration = starting_street_count[starting_street]
-    #     if len(intersections[E]["green_lights"]) == 0:
-    #         intersections[E]["green_lights"].append({
-    #             "name": starting_street,
-    #             "duration": D,
-    #         })
-
-    # for intersection in intersections:
-    #     if not intersections[intersection]["green_lights"]:
-    #         intersections[intersection]["green_lights"].append({
-    #             "name": intersections[intersection]["incoming"][0],
-    #             "duration": D,
-    #         })
 
     out_str = f'{len(intersections)}\n'
     for intersection in intersections:
