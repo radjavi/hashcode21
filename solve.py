@@ -30,4 +30,16 @@ def solve1(inp):
             street = line[p]
         v += 1
 
+    intersections = {}
+
+    out_str = f'{len(intersections)}\n'
+    for intersection in intersections:
+        out_str += f'{intersection.id}\n'
+        out_str += f'{intersection.nr_incoming}\n'
+        for green_light in intersection.green_lights:
+            out_str += f'{green_light.name}'
+            out_str += ' '
+            out_str += f'{green_light.duration}'
+            out_str += '\n'
+
     return ""
