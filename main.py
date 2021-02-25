@@ -11,6 +11,7 @@ output_files = [
   'out/c_out',
   'out/d_out',
   'out/e_out',
+  'out/f_out',
 ]
 
 
