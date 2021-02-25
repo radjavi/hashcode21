@@ -4,5 +4,8 @@ run:
 run3:
 	python3 main.py
 
+pypy3:
+	pypy3 main.py
+
 zip:
 	python zip_dir.py
