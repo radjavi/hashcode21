@@ -31,9 +31,11 @@ def main(file):
     with open(file[0], 'r') as inp, open(file[1], 'w') as out:
         # Call appropriate solver
         out_str = solve.solve(inp)
+        # Copy string data to solver
+        data = inp.read()
         # Create output file
         out.write(out_str)
-        print(f'DONE: {file[0]}, SCORE: {score.score(inp, out_str)}')
+        print(f'DONE: {file[0]}, SCORE: {score.score(data, out_str)}')
 
 
 if __name__ == '__main__':
