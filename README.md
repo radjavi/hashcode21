@@ -1,6 +1,8 @@
 # Google Hash Code 2021
 
-## Team: `Saving Private Static Ryan`
+## Team: `KMP`
 
 ## Online Qualification Round
-Score: TBA
+Score: 8,653,585
+
+Rank: 3116 out of 9004
